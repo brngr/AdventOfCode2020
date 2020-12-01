@@ -1,16 +1,18 @@
 #!/bin/python3
 import sys
 
+
 def main():
     f = open(sys.argv[1],"r")
     puzzle_input = list(map(int,f.readlines()))
     f.close()
     for i in puzzle_input:
-        for j in puzzle_input:
-            for k in puzzle_input:
-                if i + j + k == 2020:
-                    print(i * j * k)
-                    return
+        tmp1 = 2020 - i
+        for l in puzzle_input:
+            tmp2 = tmp1 - l
+            if tmp2 in puzzle_input:
+                print(i*l*tmp2)
+                return
 
 if __name__ == "__main__":
     main()
