@@ -10,22 +10,21 @@ class Password:
         tmp = tmp[0].split(" ")
         letter = tmp.pop().strip()
         tmp = tmp[0].split("-")
-        letter_max = int(tmp.pop().strip())
-        letter_min = int(tmp.pop().strip())
-        self.min = letter_min
-        self.max = letter_max
+        pos1 = int(tmp.pop().strip()) - 1
+        pos2 = int(tmp.pop().strip()) - 1
+        self.pos2 = pos2
+        self.pos1 = pos1
         self.letter = letter
         self.password = password
         return
 
     def isValid(self):
-        if (
-            self.password.count(self.letter) < self.min
-            or self.password.count(self.letter) > self.max
+        if (self.password[self.pos1] == self.letter) ^ (
+            self.password[self.pos2] == self.letter
         ):
-            return 0
-        else:
             return 1
+        else:
+            return 0
 
 
 def main():
