@@ -13,8 +13,8 @@ class Grid:
         self.count = 0
         self.TREE = "#"
         self.DOT = "."
-        self.MOVE_RIGHT = slop[0]
-        self.MOVE_DOWN = slop[1]
+        self.right = slop[0]
+        self.down = slop[1]
 
     def show(self):
         print(self.grid)
@@ -35,7 +35,7 @@ class Grid:
             return False
 
     def checkSizeX(self):
-        if self.posX + self.MOVE_RIGHT > len(self.grid[0]) - 1:
+        if self.posX + self.right > len(self.grid[0]) - 1:
             return False
         else:
             return True
@@ -47,8 +47,8 @@ class Grid:
             return False
 
     def moveOnGrid(self):
-        self.posX = self.posX + self.MOVE_RIGHT
-        self.posY = self.posY + self.MOVE_DOWN
+        self.posX = self.posX + self.right
+        self.posY = self.posY + self.down
         return
 
     def runTrajectory(self):
