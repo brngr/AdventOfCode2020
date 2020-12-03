@@ -4,7 +4,7 @@ import cProfile
 
 
 class Grid:
-    def __init__(self, pattern):
+    def __init__(self, pattern, slop):
         self.pattern = pattern
         self.grid = []
         self.posX = 0
@@ -13,8 +13,8 @@ class Grid:
         self.count = 0
         self.TREE = "#"
         self.DOT = "."
-        self.MOVE_RIGHT = 3
-        self.MOVE_DOWN = 1
+        self.MOVE_RIGHT = slop[0]
+        self.MOVE_DOWN = slop[1]
 
     def show(self):
         print(self.grid)
@@ -60,11 +60,12 @@ class Grid:
 
             if self.isTree(self.grid[self.posY][self.posX]):
                 self.count += 1
-        print(self.count)
-        return
+        return self.count
 
 
 def main():
+    slopes = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]
+    answer = 1
     f = open(sys.argv[1], "r")
     puzzle_input = list(map(str, f.readlines()))
     f.close()
@@ -72,8 +73,10 @@ def main():
     for i in range(len(puzzle_input)):
         puzzle_input[i] = puzzle_input[i].strip()
 
-    grid = Grid(puzzle_input)
-    grid.runTrajectory()
+    for s in slopes:
+        grid = Grid(puzzle_input, s)
+        answer = answer * grid.runTrajectory()
+    print(answer)
     return
 
 
