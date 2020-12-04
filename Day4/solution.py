@@ -1,6 +1,7 @@
 #!/bin/python3
 import sys
 import cProfile
+import re
 
 
 class passport:
@@ -23,11 +24,25 @@ class passport:
     def getFieldData(self, field, dataLength):
         fieldPos = self.data.find(field)
         if fieldPos != -1:
-            value = self.data[
-                fieldPos + len(field) + 1 : fieldPos + len(field) + 1 + dataLength
-            ]
-        else:
-            return 0
+            if field != "hgt":
+                value = self.data[
+                    fieldPos + len(field) + 1 : fieldPos + len(field) + 1 + dataLength
+                ]
+                return value
+
+            else:
+                print("dgdfs")
+                flag = True
+                buffer = ""
+                i = 0
+                val = ""
+                while flag:
+                    val = self.data[fieldPos + len(field) + 1 + i]
+                    buffer += val
+                    if "cm" in buffer or "in" in buffer:
+                        flag = False
+                return buffer
+
         return
 
     def showData(self):
@@ -43,7 +58,7 @@ class passport:
         self.byr = self.getFieldData("byr", 4)
         self.iyr = self.getFieldData("iyr", 4)
         self.eyr = self.getFieldData("eyr", 4)
-        # self.hgt = self.getFieldData("hgt", 0)
+        self.hgt = self.getFieldData("hgt", 0)
         self.hcl = self.getFieldData("hcl", 7)
         self.ecl = self.getFieldData("ecl", 3)
         self.pid = self.getFieldData("pid", 9)
@@ -51,7 +66,7 @@ class passport:
 
     def checkValiditiy(self):
         # rewrite with regex
-        if "byr:" in self.data:
+        if "byr:" not in self.data:
             return False
         if "iyr:" not in self.data:
             return False
@@ -90,11 +105,10 @@ def main():
     # print(passportData)
     for p in passportData:
         passportBuffer = passport(p)
-        # print(passportBuffer.data)
         # if passportBuffer.isValid == True:
         #    count += 1
-    # print(count)
-    print("---------------")
+        # print(count)
+
     return
 
 
