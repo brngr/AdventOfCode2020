@@ -49,13 +49,15 @@ def main():
     f = open(sys.argv[1], "r")
     puzzle_input = list(map(str.strip, f.readlines()))
     f.close()
-    seatID = 0
-    # puzzle_input = ["FBFBBFFRLR"]
+    seats = []
     for p in puzzle_input:
         tmp = boardingPass(p)
-        if tmp.id > seatID:
-            seatID = tmp.id
-    print(seatID)
+        seats.append(tmp.id)
+
+    seats.sort()
+    for s in seats:
+        if s + 1 not in seats and s + 2 in seats:
+            print(s + 1)
     return
 
 
