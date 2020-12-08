@@ -11,7 +11,7 @@ class ProcessingRule:
         self.mainColor = rule.split(" bags contain ")[0]
         self.containedColor = rule.split(" bags contain ")[1]
         self.containedColor = re.sub(
-            "[^a-zA-Z ]", "", self.containedColor
+            "[^a-zA-Z1-9 ]", "", self.containedColor
         )  # remove number and dot
         self.containedColor = re.split(
             " bags| bag", self.containedColor
@@ -39,6 +39,7 @@ def main():
         rules.append(ProcessingRule(p))
 
     containgGold = []
+
     for r in rules:
         if r.hasGold:
             r.isCounted = True
@@ -53,7 +54,16 @@ def main():
                     r.isCounted = True
                     containgGold.append(r.mainColor)
 
-    print(count)
+    myBag = None
+    for r in rules:
+        if r.mainColor == "shiny gold":
+            myBag = r
+            break
+    print(myBag.containedColor)
+    for c in myBag.containedColor:
+        quantity = c[0]
+        color = c[2:]
+        print(quantity, color)
 
 
 if __name__ == "__main__":
